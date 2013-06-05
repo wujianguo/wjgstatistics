@@ -12,5 +12,11 @@ handlers:
   script: admin.app
 #  login: admin
   
+- url: /api
+  script: api.app
+  
 - url: /.*
   script: notfound.app
+  
+- name: jinja2
+  version: latest

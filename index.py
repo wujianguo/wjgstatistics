@@ -12,18 +12,9 @@ class MainPage(webapp2.RequestHandler):
         except Exception,e:
             logging.error(e)
             uid = 'err'
-            url = 'http://www.baidu.com'
-        s = Statistics.all()
-        s.filter("uid =", uid)
-        u = s.get()
-        if u:
-            u.url.append(url)
-            u.ip.append(ip)
-            u.mtime.append(datetime.datetime.utcnow())
-            u.put()
-        else:
-            new = Statistics(uid=uid,url=[url,],ip=[ip,],mtime=[datetime.datetime.utcnow(),])
-            new.put()
+            url = 'https://www.google.com'
+        new = Statistics(uid=uid,url=url,ip=ip,mtime=datetime.datetime.utcnow())
+        new.put()
         if not url.startswith('http'):
             url = 'http://' + url
         self.redirect(str(url))

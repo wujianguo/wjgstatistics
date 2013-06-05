@@ -2,20 +2,26 @@ import webapp2
 from google.appengine.api import users
 import json
 from statistics import Statistics
+import jinja2
+import os
 
+JINJA_ENVIRONMENT = jinja2.Environment(
+    loader=jinja2.FileSystemLoader(os.path.join(os.path.dirname(__file__),'templates')))
 class MainPage(webapp2.RequestHandler):
     def get(self):
+        ip = self.request.remote_addr
         user = users.get_current_user()
         if not user or not users.is_current_user_admin():
             self.redirect(users.create_login_url(self.request.uri))
-        self.response.headers['Content-Type'] = 'application/json'
-        resmsg = {'result':[]}
-        infos = Statistics.all()
-        for s in infos:
-            one_uid = {s.uid:[]}
-            for j in range(len(s.ip)):
-                one_uid[s.uid].append([s.ip[j],s.url[j],s.mtime[j].strftime("%Y-%m-%d %H:%M:%S")])
-            resmsg['result'].append(one_uid)
-        self.response.write(json.dumps(resmsg))
+        template_values = {'user': user,}
+        sta = Statistics.all()
+        uids = []
+        for s in sta:
+#            uids.setdefault(s.uid,[])
+            uids.append({'uid':s.uid,'ip':s.ip,'time':s.mtime,'url':s.url})
+#            uids[s.uid].append({'ip':s.ip,'time':s.mtime,'url':s.url})
+        template_values.update({'statistics':uids})
+        template = JINJA_ENVIRONMENT.get_template('admin.html')
+        self.response.write(template.render(template_values))
 app = webapp2.WSGIApplication([('/admin', MainPage)],
                               debug=True)
