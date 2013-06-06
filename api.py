@@ -11,4 +11,4 @@ class MainPage(webapp2.RequestHandler):
         resmsg['result'].append({'ip':ip})
         self.response.write(json.dumps(resmsg))
 app = webapp2.WSGIApplication([('/api', MainPage)],
-                              debug=True)
+                              debug=False)

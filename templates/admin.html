@@ -1,19 +1,29 @@
 ﻿
 {% extends 'base.html' %}
 
-{% block title %}Handle Cmd{% endblock %}
+{% block title %}admin{% endblock %}
 
 {% block content %}
 
 <table class="table">
-	<tr>
-	{% for sta in statistics %}
-      <th>{{ sta.uid }}</th>
-      <th>{{ sta.ip }}</th>
-      <th>{{ sta.mtime }}</th>
-      <th>{{ sta.url }}</th>
-	{% endfor %}
-	</tr>
+	<thead>
+		<tr>
+			<th>uid</th>
+			<th>ip</th>
+			<th>mtime</th>
+			<th>url</th>
+		</tr>
+	</thead>
+	<tbody>
+		{% for sta in statistics %}
+		<tr>
+			<th>{{ sta.uid }}</th>
+			<th>{{ sta.ip }}</th>
+			<th>{{ sta.mtime }}</th>
+			<th>{{ sta.url }}</th>
+		</tr>
+		{% endfor %}
+	</tbody>
 </table>
 
 {% endblock %}

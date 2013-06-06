@@ -12,8 +12,10 @@ class MainPage(webapp2.RequestHandler):
         except Exception,e:
             logging.error(e)
             uid = 'err'
+            new = Statistics(uid=uid,url=url,ip=ip,mtime=datetime.datetime.utcnow())
             url = 'https://www.google.com'
-        new = Statistics(uid=uid,url=url,ip=ip,mtime=datetime.datetime.utcnow())
+        else:
+            new = Statistics(uid=uid,url=url,ip=ip,mtime=datetime.datetime.utcnow())
         new.put()
         if not url.startswith('http'):
             url = 'http://' + url
