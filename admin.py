@@ -1,6 +1,6 @@
 import webapp2
 from google.appengine.api import users
-import json, logging
+import json, logging, datetime
 from statistics import Statistics
 import jinja2
 import os
@@ -18,7 +18,7 @@ class MainPage(webapp2.RequestHandler):
         uids = []
         for s in sta:
 #            uids.setdefault(s.uid,[])
-            uids.append({'uid':s.uid,'ip':s.ip,'mtime':s.mtime,'url':s.url})
+            uids.append({'uid':s.uid,'ip':s.ip,'mtime':s.mtime+datetime.timedelta(hours=8),'url':s.url})
 #            uids[s.uid].append({'ip':s.ip,'time':s.mtime,'url':s.url})
         template_values.update({'statistics':uids})
         template = JINJA_ENVIRONMENT.get_template('admin.html')
