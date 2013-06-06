@@ -15,6 +15,9 @@ handlers:
 - url: /api
   script: api.app
   
+- url: /favicon\.ico
+  script: favicon.app
+  
 - url: /.*
   script: notfound.app
 

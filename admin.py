@@ -15,8 +15,9 @@ class MainPage(webapp2.RequestHandler):
             self.redirect(users.create_login_url(self.request.uri))
         template_values = {'user': user,}
         sta = Statistics.all()
+        sta.order("-mtime")
         uids = []
-        for s in sta:
+        for s in sta.fetch(100):
 #            uids.setdefault(s.uid,[])
             uids.append({'uid':s.uid,'ip':s.ip,'mtime':s.mtime+datetime.timedelta(hours=8),'url':s.url})
 #            uids[s.uid].append({'ip':s.ip,'time':s.mtime,'url':s.url})
