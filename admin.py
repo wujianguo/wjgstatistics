@@ -4,7 +4,7 @@ import json, logging, datetime
 from statistics import Statistics
 import jinja2
 import os
-
+import addr
 JINJA_ENVIRONMENT = jinja2.Environment(
     loader=jinja2.FileSystemLoader(os.path.join(os.path.dirname(__file__),'templates')))
 class MainPage(webapp2.RequestHandler):
@@ -18,9 +18,11 @@ class MainPage(webapp2.RequestHandler):
         sta.order("-mtime")
         uids = []
         for s in sta.fetch(100):
-#            uids.setdefault(s.uid,[])
-            uids.append({'uid':s.uid,'ip':s.ip,'mtime':s.mtime+datetime.timedelta(hours=8),'url':s.url})
-#            uids[s.uid].append({'ip':s.ip,'time':s.mtime,'url':s.url})
+            if not s.addr:
+                s.addr = addr.ip2addr(s.ip)
+                s.put()
+            uids.append({'uid':s.uid,'ip':s.ip,'mtime':s.mtime+datetime.timedelta(hours=8),
+                'url':s.url,'user_agent':s.user_agent,'addr':s.addr})
         template_values.update({'statistics':uids})
         template = JINJA_ENVIRONMENT.get_template('admin.html')
         self.response.write(template.render(template_values))

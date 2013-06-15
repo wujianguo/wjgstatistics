@@ -14,6 +14,10 @@ handlers:
   
 - url: /api
   script: api.app
+
+- url: /tasks/ip2addr
+  script: ip2addr.app
+  login: admin
   
 - url: /favicon\.ico
   script: favicon.app

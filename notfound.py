@@ -7,7 +7,8 @@ class MainPage(webapp2.RequestHandler):
         ip = self.request.remote_addr
         uid = 'notfound'
         url = self.request.uri
-        new = Statistics(uid=uid,url=url,ip=ip,mtime=datetime.datetime.utcnow())
+        user_agent = self.request.headers.get('User-Agent','none')
+        new = Statistics(uid=uid,url=url,user_agent = user_agent, ip=ip,mtime=datetime.datetime.utcnow())
         new.put()
         self.redirect('https://www.google.com')
 app = webapp2.WSGIApplication([('/.*', MainPage)],

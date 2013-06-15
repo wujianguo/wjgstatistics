@@ -1,0 +1,5 @@
+cron:
+- description: daily ip2addr job
+  url: /tasks/ip2addr
+  schedule: every 01:00
+  timezone: Asia/Chongqing
