@@ -9,7 +9,7 @@ def ip2addr(ip):
 	try:
 		url='http://ip.taobao.com/service/getIpInfo.php?ip='+ip
 		ip_info = json.loads(urllib.urlopen(url).read())
-		return ('%s%s%s%s%s%s'%(ip_info['data']['country'],
+		return ('%s%s%s%s%s %s'%(ip_info['data']['country'],
 			ip_info['data']['area'],
 			ip_info['data']['region'],
 			ip_info['data']['city'],
