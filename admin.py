@@ -1,13 +1,21 @@
+#!/usr/bin/env python
+# -*- coding: utf-8 -*-
+
 import webapp2
 from google.appengine.api import users
-import json, logging, datetime
+import json
+import logging
+import datetime
 from statistics import Statistics
 import jinja2
 import os
 
 JINJA_ENVIRONMENT = jinja2.Environment(
-    loader=jinja2.FileSystemLoader(os.path.join(os.path.dirname(__file__),'templates')))
+    loader=jinja2.FileSystemLoader(os.path.join(os.path.dirname(__file__), 'templates')))
+
+
 class MainPage(webapp2.RequestHandler):
+
     def get(self):
         ip = self.request.remote_addr
         user = users.get_current_user()
@@ -19,9 +27,9 @@ class MainPage(webapp2.RequestHandler):
         uids = []
         for s in sta.fetch(100):
 #            uids.setdefault(s.uid,[])
-            uids.append({'uid':s.uid,'ip':s.ip,'mtime':s.mtime+datetime.timedelta(hours=8),'url':s.url})
+            uids.append({'uid': s.uid,'ip':s.ip,'mtime':s.mtime+datetime.timedelta(hours=8),'url':s.url})
 #            uids[s.uid].append({'ip':s.ip,'time':s.mtime,'url':s.url})
-        template_values.update({'statistics':uids})
+        template_values.update({'statistics': uids})
         template = JINJA_ENVIRONMENT.get_template('admin.html')
         self.response.write(template.render(template_values))
 app = webapp2.WSGIApplication([('/admin', MainPage)],
