@@ -25,20 +25,20 @@ class MainPage(webapp2.RequestHandler):
 
     def post(self):
         template_values = {'url': None}
-        try:
+        if True:
             long_url = 's.wujianguo.org/?' + self.request.get(
                 'id') + '&' + self.request.get('url')
             params = {'url': long_url}
             params = urllib.urlencode(params)
-            result = urlfetch.fetch(url='http://dwz.cn/create.php',
+            result = urlfetch.fetch(url='http://dwz.wujianguo.org/api',
                                     payload=params,
                                     method=urlfetch.POST)
+            logging.info(result)
             res = json.loads(result.content)
             logging.info(res)
-            if res['status'] == 0:
-                template_values['url'] = {'origin':long_url, 'short': res['tinyurl']}
-        except Exception as e:
-            logging.error(e)
+            template_values=res
+        # except Exception as e:
+            # logging.error(e)
         logging.info(template_values)
         template = JINJA_ENVIRONMENT.get_template('geturl.html')
         self.response.write(template.render(template_values))
