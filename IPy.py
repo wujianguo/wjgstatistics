@@ -1,3 +1,6 @@
+#!/usr/bin/env python
+# -*- coding: utf-8 -*-
+
 """
 IPy - class and tools for handling of IPv4 and IPv6 addresses and networks.
 See README file for learn how to use IPy.

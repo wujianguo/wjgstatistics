@@ -11,6 +11,9 @@ handlers:
 - url: /admin
   script: admin.app
   login: admin
+
+- url: /geturl
+  script: geturl.app
   
 - url: /api
   script: api.app
