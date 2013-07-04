@@ -16,21 +16,8 @@
   </fieldset>
 </form>
 {% if url%}
-<table class="table">
-	<thead>
-		<tr>
-			<th>id</th>
-			<th>url</th>
-		</tr>
-	</thead>
-	<tbody>
-		<!-- {% for sta in statistics %} -->
-		<tr>
-			<th>{{ url.origin }}</th>
-			<th>{{ url.short }}</th>
-		</tr>
-		<!-- {% endfor %} -->
-	</tbody>
-</table>
+{{ url.origin }}<br/>
+{{ url.short }}
+
 {% endif %}
 {% endblock %}
